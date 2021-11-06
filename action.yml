@@ -1,4 +1,4 @@
-﻿name: "Map Diff Bot"
+name: "Map Diff Bot"
 description: "Shows map changes for the game Space Station 14."
 branding:
   icon: map
