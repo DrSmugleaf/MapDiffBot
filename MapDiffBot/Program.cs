@@ -87,7 +87,7 @@ namespace MapDiffBot
                 message.AppendLine($"[{mapName}]({url})");
             }
             
-            Console.WriteLine($@"::set-output name=message::{message.ToString()}");
+            Console.WriteLine($@"::set-output name=message::{message}");
         }
     }
 }
