@@ -12,6 +12,9 @@ namespace MapDiffBot
     {
         private const string GithubContentUrl = "https://raw.githubusercontent.com/";
         
+        // shoutout to mirrorcult
+        private const string NewLine = @"%0A";
+        
         private static void Main(string[] args)
         {
             Parser.Default
@@ -35,7 +38,7 @@ namespace MapDiffBot
             var maps = ParseArray(args.Maps);
             args.DifferUrl += args.DifferUrl.EndsWith('/') ? string.Empty : '/';
 
-            var message = new StringBuilder($"| {maps.Length} maps were modified.\n");
+            var message = new StringBuilder($"{maps.Length} maps were modified.{NewLine}");
             
             for (var i = 0; i < maps.Length; i++)
             {
@@ -86,9 +89,9 @@ namespace MapDiffBot
 
                 mapName = $"{char.ToUpper(mapName[0])}{mapName[1..]}";
 
-                message.AppendLine(oldImageLink == null
-                    ? $"| [View new map: {mapName}]({url})"
-                    : $"| [View image diff: {mapName}]({url})");
+                message.Append(oldImageLink == null
+                    ? $"[View new map: {mapName}]({url})"
+                    : $"[View image diff: {mapName}]({url})");
             }
             
             Console.WriteLine($@"::set-output name=message::{message}");
