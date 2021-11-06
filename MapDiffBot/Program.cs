@@ -84,7 +84,11 @@ namespace MapDiffBot
                     url += $"?old={oldImageLink}";
                 }
 
-                message.AppendLine($"| [{mapName}]({url})");
+                mapName = $"{char.ToUpper(mapName[0])}{mapName[1..]}";
+
+                message.AppendLine(oldImageLink == null
+                    ? $"| [View new map: {mapName}]({url})"
+                    : $"| [View image diff: {mapName}]({url})");
             }
             
             Console.WriteLine($@"::set-output name=message::{message}");
