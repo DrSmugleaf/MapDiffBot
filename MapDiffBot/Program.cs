@@ -29,6 +29,7 @@ namespace MapDiffBot
                 .Remove(0, 1)
                 .Remove(str.Length - 2, 1)
                 .Split(',')
+                .Select(s => s.Replace("\"", ""))
                 .ToArray();
         }
 
