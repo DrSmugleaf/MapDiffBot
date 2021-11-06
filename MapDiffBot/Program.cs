@@ -23,9 +23,8 @@ namespace MapDiffBot
         {
             return str
                 .Remove(0, 1)
-                .Remove(str.Length - 1, 1)
+                .Remove(str.Length - 2, 1)
                 .Split(',')
-                .Select(s => s.Remove(0, 1).Remove(s.Length - 1, 1))
                 .ToArray();
         }
 
@@ -35,7 +34,7 @@ namespace MapDiffBot
             var maps = ParseArray(args.Maps);
             args.DifferUrl += args.DifferUrl.EndsWith('/') ? string.Empty : '/';
 
-            var message = new StringBuilder($"{maps.Length} maps modified.");
+            var message = new StringBuilder($"{maps.Length} maps were modified.\n");
             
             for (var i = 0; i < maps.Length; i++)
             {
@@ -56,7 +55,7 @@ namespace MapDiffBot
                 }
 
                 var newImageLink = Uri.EscapeDataString(images[i]);
-                oldImageLink ??= $"{GithubContentUrl}{args.RepoName}/{args.BaseCommit}/{args.MapImageDirectory}";
+                oldImageLink ??= $"{GithubContentUrl}{args.RepoName}/{args.BaseCommit}/{args.MapImageDirectory}/{mapName}.png";
                 var url = $"{args.DifferUrl}?old={oldImageLink}&new={newImageLink}";
 
                 message.AppendLine($"[{mapName}]({url})");
