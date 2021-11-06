@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.Json;
 using CommandLine;
@@ -56,7 +57,32 @@ namespace MapDiffBot
 
                 var newImageLink = Uri.EscapeDataString(images[i]);
                 oldImageLink ??= $"{GithubContentUrl}{args.RepoName}/{args.BaseCommit}/{args.MapImageDirectory}/{mapName}.png";
-                var url = $"{args.DifferUrl}?old={oldImageLink}&new={newImageLink}";
+                
+                try
+                {
+                    var request = WebRequest.Create(oldImageLink);
+                    using var response = request.GetResponse();
+                }
+                catch (WebException e)
+                {
+                    if (e.Status != WebExceptionStatus.ProtocolError || e.Response == null)
+                    {
+                        throw;
+                    }
+                    
+                    var resp = (HttpWebResponse) e.Response;
+                    if (resp.StatusCode == HttpStatusCode.NotFound)
+                    {
+                        oldImageLink = null;
+                    }
+                }
+                
+                var url = $"{args.DifferUrl}?new={newImageLink}";
+
+                if (oldImageLink != null)
+                {
+                    url += $"?old={oldImageLink}";
+                }
 
                 message.AppendLine($"[{mapName}]({url})");
             }
