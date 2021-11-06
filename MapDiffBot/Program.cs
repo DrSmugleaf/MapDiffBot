@@ -35,7 +35,7 @@ namespace MapDiffBot
             var maps = ParseArray(args.Maps);
             args.DifferUrl += args.DifferUrl.EndsWith('/') ? string.Empty : '/';
 
-            var message = new StringBuilder($"{maps.Length} maps were modified.\n");
+            var message = new StringBuilder($"| {maps.Length} maps were modified.\n");
             
             for (var i = 0; i < maps.Length; i++)
             {
@@ -84,7 +84,7 @@ namespace MapDiffBot
                     url += $"?old={oldImageLink}";
                 }
 
-                message.AppendLine($"[{mapName}]({url})");
+                message.AppendLine($"| [{mapName}]({url})");
             }
             
             Console.WriteLine($@"::set-output name=message::{message}");
