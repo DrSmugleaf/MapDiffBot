@@ -7,7 +7,7 @@ namespace MapDiffBot
         [Option("uploaded", Required = true, HelpText = "An array of image links.")]
         public string Uploaded { get; set; } = default!;
         
-        [Option("maps", Required = true, HelpText = "An array of map files.")]
+        [Option("maps", Required = true, HelpText = "An array of map names.")]
         public string Maps { get; set; } = default!;
         
         // Example: https://spacestation14.io/map-diff-viewer/
@@ -20,7 +20,7 @@ namespace MapDiffBot
         [Option("repoName", Required = true, HelpText = "Repository's full name in the format {owner}/{repo}.")]
         public string RepoName { get; set; } = default!;
         
-        [Option("mapImageDirectory", Required = true, HelpText = "Path to the directory that contains old map images..")]
+        [Option("mapImageDirectory", Required = true, HelpText = "Path to the directory that contains old map images.")]
         public string MapImageDirectory { get; set; } = default!;
     }
 }

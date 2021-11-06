@@ -1,0 +1,50 @@
+﻿name: "Map Diff Bot"
+description: "Shows map changes for the game Space Station 14."
+branding:
+  icon: map
+  color: blue
+inputs:
+  uploaded:
+    description:
+      "An array of image links."
+    required: true
+  maps:
+    description:
+      "An array of map names."
+    required: true
+  url:
+    description:
+      "Url to append ?old and ?new query parameters on."
+    required: true
+  baseCommit:
+    description:
+      "Commit hash of the base branch."
+    required: true
+  repoName:
+    description:
+      "Repository's full name in the format {owner}/{repo}."
+    required: true
+  mapImageDirectory:
+    description:
+      "Path to the directory that contains old map images."
+    required: true
+outputs:
+  message:
+    description:
+      "Message with all the maps that changed."
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - "--uploaded"
+    - ${{ inputs.uploaded }}
+    - "--maps"
+    - ${{ inputs.maps }}
+    - "--url"
+    - ${{ inputs.url }}
+    - "--baseCommit"
+    - ${{ inputs.baseCommit }}
+    - "--repoName"
+    - ${{ inputs.repoName }}
+    - "--mapImageDirectory"
+    - ${{ inputs.mapImageDirectory }}
